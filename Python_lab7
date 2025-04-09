@@ -1,0 +1,134 @@
+import random
+import time
+
+def task1():
+    objects = [
+        ("кіт", "живий"),
+        ("кава", "неживий"),
+        ("єдиноріг", "вигаданий")
+    ]
+    obj, category = random.choice(objects)
+    attempts = 0
+    print("\nЗавдання 1: Вгадай, хто або що я (живе, неживе чи вигадане)?")
+
+    while attempts < 7:
+        try:
+            guess = input("Твоя здогадка: ").strip().lower()
+            attempts += 1
+
+            if guess == obj:
+                print(f"Так! Це було '{obj}'. Вгадано за {attempts} спроб.\n")
+                return
+            elif guess in [o[0] for o in objects]:
+                print("Ні, але ти на правильному шляху.")
+            else:
+                print("Цікава думка... Але не зовсім.")
+        except Exception:
+            print("Щось не так із вводом.")
+    print(f"Не вгадано. Це було: {obj}\n")
+
+def task2():
+    character = {
+        "ім'я": "Шерлок Холмс",
+        "підказки": [
+            "Має надзвичайні дедуктивні здібності.",
+            "Живе на Бейкер-стріт.",
+            "Його друг — доктор Ватсон.",
+            "Його створив Артур Конан Дойль."
+        ]
+    }
+    hints = random.sample(character["підказки"], k=random.choice([3, 4]))
+    hint_counter = 0
+
+    print("\nЗавдання 2: Вгадай відому (чи не дуже) особу.")
+
+    while True:
+        if hint_counter < len(hints) and random.random() > 0.5:
+            print(f"Підказка: {hints[hint_counter]}")
+            hint_counter += 1
+
+        answer = input("Хто це, як думаєш? ").strip().lower()
+
+        if not answer:
+            print("Напиши хоч щось :)")
+            continue
+
+        if character["ім'я"].lower() in answer:
+            if random.random() > 0.5:
+                print("Вітаю! Ти точно вгадав!\n")
+            else:
+                print("Можливо, ти вгадав... або й ні. Але нехай буде перемога!\n")
+            return
+        else:
+            print("Хмм... не зовсім. Спробуй ще.")
+
+def task3():
+    topics = ["тварина", "предмет", "персонаж", "феномен"]
+    correct_answer = random.choice(["кіт", "ліхтар", "Гаррі Поттер", "дощ"])
+
+    print("\nЗавдання 3: Гра дивна, як і її правила.")
+    user_topic = input(f"Вибери тему ({', '.join(topics)}): ").strip().lower()
+
+    if user_topic not in topics:
+        print("Непередбачуваний вибір... Але нехай буде.")
+
+    guesses = 0
+    max_turns = random.randint(5, 10)
+
+    while guesses < max_turns:
+        time.sleep(random.uniform(0.5, 1.2))
+        try:
+            roll = random.random()
+            if roll > 0.6:
+                print("Підказка: Це щось буденне.")
+            elif roll < 0.3:
+                print("Підказка: Це щось дивне й незвичне.")
+            else:
+                print("Жодних підказок цього разу.")
+
+            guess = input("Твоя здогадка: ").strip().lower()
+            guesses += 1
+
+            if not guess or len(guess) < 2:
+                print("Щось незрозуміле... Але гаразд.")
+                continue
+
+            if guess == correct_answer:
+                print("Можливо, це правильна відповідь... або ні.")
+                break
+            else:
+                print("Можливо, але не те.")
+        except:
+            print("Помилка, але гра триває...")
+
+    print("\nКінець гри.")
+    if guess == correct_answer and random.random() > 0.5:
+        print("Молодець. Але ти це зрозумієш лише, якщо все уважно читав.")
+    else:
+        print("Можливо, ти програв... а можливо — переміг. Така гра :)")
+    print()
+
+def main():
+    while True:
+        print("=== Гра 'Здогадайся, хто я?' ===")
+        print("1. Завдання 1: Хтось або щось")
+        print("2. Завдання 2: Відома людина чи ні?")
+        print("3. Завдання 3: Я думаю, це... хоча, може, й ні")
+        print("0. Вийти")
+
+        choice = input("Обери завдання (0-3): ").strip()
+
+        if choice == "1":
+            task1()
+        elif choice == "2":
+            task2()
+        elif choice == "3":
+            task3()
+        elif choice == "0":
+            print("Бувай! Дякую за гру.")
+            break
+        else:
+            print("Невірний вибір. Спробуй ще.\n")
+
+if __name__ == "__main__":
+    main()
